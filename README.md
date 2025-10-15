@@ -16,3 +16,12 @@ Mục tiêu: Giúp sinh viên và người mới học web tham khảo cách xâ
 1. Tải mã nguồn về:
    ```bash
    git clone https://github.com/klauski24/Web-learning.git
+
+## ✨ Tính năng
+- Form đăng nhập đẹp, dễ hiểu  
+- Responsive cơ bản  
+- Mã nguồn dễ chỉnh sửa, học tập  
+
+## 👨‍💻 Tác giả
+Bùi Văn Khiêm — `klauski24`  
+License: MIT

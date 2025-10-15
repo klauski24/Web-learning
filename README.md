@@ -1,25 +1,18 @@
-# Web learning
-# Student Login Web (Open Source Project)
+# Web-learning (Open Source Project)
 
-## Giới thiệu
-Trang web đăng nhập đơn giản cho sinh viên hoặc người dùng hệ thống nội bộ.  
-Sử dụng HTML, CSS, JS, có thể mở rộng để tích hợp với cơ sở dữ liệu.
+## 🌐 Giới thiệu
+Dự án gồm các giao diện web học tập được viết bằng **HTML, CSS và JavaScript**, bao gồm:
+- 2 giao diện đăng nhập (login pages)
+- 1 giao diện xem phim (movie page)
 
-## Tính năng
-- Form đăng nhập
-- Kiểm tra hợp lệ đầu vào
-- Giao diện thân thiện và responsive
+Mục tiêu: Giúp sinh viên và người mới học web tham khảo cách xây dựng form đăng nhập và bố cục website cơ bản.
 
-## Cách sử dụng
-1. Tải mã nguồn về:  
-   https://github.com/klauski24/Web-learning
-2. Mở file để chạy thử.
+## ✨ Tính năng
+- Giao diện thân thiện, responsive.
+- Có thể mở trực tiếp trên trình duyệt.
+- Dễ dàng tùy chỉnh hoặc tái sử dụng.
 
-## Đóng góp
-Bạn có thể fork, chỉnh sửa và gửi pull request nếu muốn phát triển thêm.
-
----
-
-**Tác giả:** Bùi Văn Khiêm  
-**Giấy phép:** MIT License
-
+## 🧠 Cách sử dụng
+1. Tải mã nguồn về:
+   ```bash
+   git clone https://github.com/klauski24/Web-learning.git

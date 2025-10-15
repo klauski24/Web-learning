@@ -1,0 +1,196 @@
+HƯỚNG DẪN CHI TIẾT LẬP TRÌNH WEB: HTML, CSS, JAVASCRIPT
+Tác giả: Bùi Văn Khiêm (hoặc thay bằng tên bạn)
+Mục đích: Tài liệu hướng dẫn để học và triển khai nhanh các trang web cơ bản, bao gồm login form, lưu dữ liệu client-side và deploy trên GitHub Pages.
+-----
+
+MỤC LỤC
+1. Tổng quan và công cụ cần thiết
+2. HTML chi tiết: cấu trúc, thẻ thường dùng, form và bảo mật cơ bản
+3. CSS chi tiết: box model, selectors, layout (Flexbox, Grid), responsive, animation
+4. JavaScript chi tiết: DOM, sự kiện, form validation, localStorage, fetch API, modules
+5. Ví dụ thực tế: Login form (HTML + CSS + JS), lưu session bằng localStorage
+6. Tổ chức dự án và workflow (Git, commit, branch)
+7. Test, debug và best practices
+8. Triển khai (GitHub Pages) và giấy phép (MIT)
+9. Tài nguyên tham khảo
+
+1. TỔNG QUAN VÀ CÔNG CỤ
+- Trình soạn thảo: VSCode (khuyến nghị) + extensions: Live Server, Prettier, ESLint, GitLens.
+- Trình duyệt: Chrome/Edge/Firefox (sử dụng DevTools để debug).
+- Git & GitHub: quản lý phiên bản, public repo để chia sẻ mã nguồn mở.
+- Mục tiêu: hiểu cấu trúc HTML, style bằng CSS, xử lý tương tác bằng JS, deploy static site.
+
+2. HTML CHI TIẾT
+2.1 Cấu trúc cơ bản
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tiêu đề trang</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Nội dung tại đây -->
+  <script src="js/main.js" defer></script>
+</body>
+</html>
+
+- Giải thích:
+  - <!DOCTYPE html>: xác định HTML5.
+  - <meta charset="utf-8">: mã hóa ký tự (UTF-8).
+  - <meta name="viewport"...>: responsive trên mobile.
+  - script với thuộc tính defer để tải sau khi DOM parse xong.
+
+2.2 Thẻ sematic quan trọng
+<header>, <nav>, <main>, <article>, <section>, <aside>, <footer> — dùng để cải thiện SEO và accessibility.
+
+2.3 Form & input (login example)
+<form id="loginForm" method="post" action="/login">
+  <label for="email">Email</label>
+  <input id="email" name="email" type="email" required autocomplete="username">
+  <label for="password">Mật khẩu</label>
+  <input id="password" name="password" type="password" required autocomplete="current-password" minlength="6">
+  <button type="submit">Đăng nhập</button>
+</form>
+
+- Thuộc tính quan trọng: required, minlength, type=email, autocomplete.
+- Tránh gửi mật khẩu qua GET. Đối với demo tĩnh, xử lý xác thực ở client là không an toàn — chỉ dùng cho demo UI.
+
+3. CSS CHI TIẾT
+3.1 Box model
+- margin, border, padding, content. Dùng box-sizing: border-box để dễ tính toán kích thước.
+
+* { box-sizing: border-box; }
+
+3.2 Selectors & Specificity
+- element, .class, #id, [attribute], :hover, :focus.
+- Specificity: id > class > element. Dùng class để style, tránh id trong CSS.
+
+3.3 Layout: Flexbox và Grid (cơ bản)
+Flexbox (1D):
+.container { display: flex; gap: 16px; align-items: center; justify-content: center; }
+
+Grid (2D):
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+3.4 Responsive design
+- Media queries, fluid widths (% / vw), max-width.
+@media (max-width: 600px) { .container { flex-direction: column; } }
+
+3.5 Typography & colors
+- Sử dụng biến CSS: :root { --primary: #0077ff; --bg: #f0f4f8; }
+- Đảm bảo contrast (WCAG) cho accessibility.
+
+3.6 CSS Animation (basic)
+button { transition: transform .15s ease; }
+button:hover { transform: translateY(-2px); }
+
+4. JAVASCRIPT CHI TIẾT
+4.1 DOM basics
+- document.getElementById, querySelector, querySelectorAll, createElement, appendChild, textContent.
+
+4.2 Sự kiện (events)
+- addEventListener('click',...), submit event (preventDefault).
+document.getElementById('loginForm').addEventListener('submit', function(e){ e.preventDefault(); ... });
+
+4.3 Form validation (client-side)
+- Kiểm tra email bằng regex nhẹ, kiểm tra độ dài password.
+- Nên hiển thị lỗi thân thiện (inline).
+
+4.4 localStorage & sessionStorage
+- Lưu dữ liệu client-side (không dùng cho sensitive data). Ví dụ lưu user login state:
+localStorage.setItem('user', JSON.stringify({email: userEmail}));
+const user = JSON.parse(localStorage.getItem('user'));
+
+4.5 Fetch API (AJAX)
+- Gửi request tới API:
+fetch('/api/login', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({email, password}) })
+  .then(res => res.json()).then(data => { ... })
+
+4.6 ES Modules & bundlers (nhỏ)
+- Module: <script type="module" src="app.js"></script>
+- Bundlers: Vite, webpack — dùng khi project lớn.
+
+5. VÍ DỤ THỰC TẾ: LOGIN FORM (HTML + CSS + JS)
+5.1 File: index.html
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo Login</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="login-page">
+    <form id="loginForm" class="card">
+      <h2>Đăng nhập</h2>
+      <div class="field"><label for="email">Email</label><input id="email" type="email" required></div>
+      <div class="field"><label for="password">Mật khẩu</label><input id="password" type="password" required minlength="6"></div>
+      <div class="actions">
+        <button type="submit">Đăng nhập</button>
+      </div>
+      <p id="msg" class="msg"></p>
+    </form>
+  </main>
+  <script src="js/main.js"></script>
+</body>
+</html>
+
+5.2 File: css/style.css (tối giản)
+*{box-sizing:border-box}
+body{font-family:Inter, Arial, sans-serif;background:#f6f8fb;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;}
+.card{background:#fff;padding:24px;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.06);width:320px;}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:14px;color:#333;margin-bottom:6px}
+.field input{width:100%;padding:10px;border:1px solid #ddd;border-radius:6px}
+.actions{display:flex;justify-content:flex-end}
+button{background:var(--primary,#0077ff);color:#fff;border:none;padding:10px 16px;border-radius:6px;cursor:pointer}
+
+5.3 File: js/main.js (ví dụ lưu user vào localStorage)
+document.getElementById('loginForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const msg = document.getElementById('msg');
+  if(email === '' || password.length < 6){ msg.textContent = 'Vui lòng nhập email và mật khẩu ít nhất 6 ký tự.'; msg.style.color='red'; return; }
+  // Demo: giả lập xác thực
+  const fakeUser = { email: 'sv@example.com', password: '123456' };
+  if(email === fakeUser.email && password === fakeUser.password){
+    localStorage.setItem('user', JSON.stringify({email}));
+    msg.textContent = 'Đăng nhập thành công!'; msg.style.color='green';
+    setTimeout(()=>{ window.location.href = 'dashboard.html'; },800);
+  } else {
+    msg.textContent = 'Email hoặc mật khẩu không đúng.'; msg.style.color='red';
+  }
+});
+
+6. TỔ CHỨC DỰ ÁN VÀ WORKFLOW
+- Cấu trúc gợi ý:
+/project
+  /css
+  /js
+  /assets
+  index.html
+  README.md
+  LICENSE
+- Workflow: feature branch (git checkout -b feat/login) → commit nhỏ, push → pull request → merge.
+- Commit message tiêu chuẩn: feat: add login UI; fix: correct CSS layout; docs: update README.
+
+7. TEST, DEBUG VÀ BEST PRACTICES
+- Dùng console.log, Breakpoints trong DevTools. Kiểm tra network tab.
+- Accessibility: labels, aria-* attributes, keyboard navigation.
+- Performance: giảm kích thước ảnh, minify CSS/JS khi deploy.
+- Bảo mật: không lưu mật khẩu plain-text, không xử lý auth ở client cho ứng dụng thực tế.
+
+8. TRIỂN KHAI (GITHUB PAGES) VÀ GIẤY PHÉP
+- GitHub Pages: Settings → Pages → chọn branch main → / (root) hoặc /docs → Save → URL: https://<username>.github.io/<repo>/
+- LICENSE: khuyên dùng MIT cho tài liệu học tập. Thêm file LICENSE với nội dung MIT.
+
+9. TÀI NGUYÊN THAM KHẢO
+- MDN Web Docs (HTML/CSS/JS) - https://developer.mozilla.org/
+- Flexbox Froggy, Grid Garden (học layout)
+- W3C Accessibility Guidelines (WCAG)
+-----
+Ghi chú: bạn có thể lưu file hướng dẫn này vào repo dưới tên: README_TUTORIAL.txt hoặc TUTORIAL.md

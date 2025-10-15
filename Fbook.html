@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>facebook</title>
+<style>
+    body {
+        background-color: #ccc;
+        font-family: Arial, sans-serif;
+    }
+    main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        width: 25%;
+        gap: 15px;
+        background-color: white;
+        padding: 20px;
+        border-radius: 15px;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+    input {
+        width: 95%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+    }
+    button {
+        background-color: blue;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 10px;
+        cursor: pointer;
+        width: 100%;
+    }
+    a{
+        text-decoration: none;
+        color: blue;
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+    .error-text {
+        color: red;
+        margin: 0;
+        font-size: 14px;
+        width: 95%;
+    }
+</style>
+</head>
+<body>
+<main>
+    <font color="blue" size="10px"><b>facebook</b></font>
+    <form>
+        <p><font size="5px">Đăng nhập facebook</font></p>
+
+        <input type="text" id="email" placeholder="Nhập Email hoặc số điện thoại">
+        <p id="emailError" class="error-text"></p>
+
+        <input type="password" id="password" placeholder="Nhập mật khẩu">
+        <p id="passwordError" class="error-text"></p>
+
+        <button type="button" onclick="login()">Đăng nhập</button>
+        <a href="#">Quên mật khẩu?</a>
+    </form>
+</main>
+
+<script>
+    function login() {
+        let email = document.getElementById('email').value;
+        let password = document.getElementById('password').value;
+        let emailError = document.getElementById('emailError');
+        let passwordError = document.getElementById('passwordError');
+
+        // Xóa lỗi cũ
+        emailError.innerText = '';
+        passwordError.innerText = '';
+        document.getElementById('email').style.borderColor = '#ccc';
+        document.getElementById('password').style.borderColor = '#ccc';
+
+        // Kiểm tra dữ liệu nhập vào
+        if (email.trim() === '' && password.trim() === '') {
+            emailError.innerText = 'Vui lòng nhập email hoặc số điện thoại.';
+            passwordError.innerText = 'Vui lòng nhập mật khẩu.';
+            document.getElementById('email').style.borderColor = 'red';
+            document.getElementById('password').style.borderColor = 'red';
+        }
+        else if (email.trim() === '') {
+            emailError.innerText = 'Vui lòng nhập email hoặc số điện thoại.';
+            document.getElementById('email').style.borderColor = 'red';
+        }
+        else if (password.trim() === '') {
+            passwordError.innerText = 'Vui lòng nhập mật khẩu.';
+            document.getElementById('password').style.borderColor = 'red';
+        }
+        else {
+            alert('Đăng nhập thành công!');
+        }
+    }
+</script>
+</body>
+</html>
